@@ -1,0 +1,40 @@
+p {
+  font-family: "Lucida Console", Monaco, monospace;
+}
+.image-true{
+  height:100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15%;
+}
+.image-false{
+  height:100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15%;
+  filter: brightness(0) invert(1);
+}
+.div-true{
+  border: 2px solid black;
+  height:250px;
+  background-color: yellow ;
+  cursor: pointer;
+}
+.div-false{
+  border: 2px solid white;
+  height:250px;
+  background-color: black;
+  cursor: pointer;
+}
+.name-true{
+text-align: center;
+color:black;
+}
+.name-false{
+text-align: center;
+margin-top: 10%;
+color:white;
+
+}

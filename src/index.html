@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/custom.css" />
+
+    <title>Lights</title>
+
+  </head>
+  <body>
+
+    <div class="container-fluid">
+      <div class="row">
+        <img src="/light_logo">
+      </div>
+    </div>
+
+
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+    function divs() {
+      var divs = '';
+      for(var i=1;i<13;i++){
+        divs+='<div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 light-div" stat="" name="'+i+'"><img class="" src="/light_logo"><p class="">LIGHTING '+ i +'</p></div>'
+      }
+      return divs;
+    }
+
+    function changeStates(name,isOpen) {
+      $("[name="+name+"]").removeClass('div-'+!isOpen);
+      $("[name="+name+"]").addClass('div-'+isOpen);
+      $("[name="+name+"] > img").removeClass('image-'+!isOpen)
+      $("[name="+name+"] > img").addClass('image-'+isOpen);
+      $("[name="+name+"] > p").removeClass('name-'+!isOpen)
+      $("[name="+name+"] > p").addClass('name-'+isOpen);
+
+      $("[name="+name+"]").attr('stat',!isOpen);
+    }
+
+
+    $(document).ready(function() {
+      $('.row').html(divs());
+      var pageURL = $(location).attr("href");
+
+      $.post(pageURL+"getState",{}, function(data){
+        for(var i=0;i<data.length;i++){
+          changeStates(data[i].name.split(' ')[1],data[i].isOpen);
+        }
+      });
+
+      var socket = io();
+
+      $( ".light-div" ).click(function() {
+        var stat = $(this).attr('stat');
+        var name = $(this).attr('name');
+
+        $.post(pageURL+"changeState",{'name':name,'stat':stat}, function(data){});
+
+        return false;
+      });
+
+      socket.on('light', function(stat,name){
+        changeStates(name,stat);
+      });
+
+    });
+
+  </script>
+  </body>
+</html>

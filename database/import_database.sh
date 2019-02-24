@@ -1,0 +1,1 @@
+mongorestore -d konuralp_toksoy lights
